@@ -1,0 +1,723 @@
+.awV2 {
+  position: relative;
+  width: min(1540px, calc(100vw - 72px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(560px, 0.83fr) minmax(780px, 1.17fr);
+  gap: 24px;
+  align-items: stretch;
+  isolation: isolate;
+}
+
+.awV2::before {
+  content: "";
+  position: absolute;
+  left: -160px;
+  top: -90px;
+  width: 760px;
+  height: 760px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(36, 112, 255, 0.34), rgba(36, 112, 255, 0.13) 38%, transparent 70%);
+  filter: blur(22px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.awV2Card {
+  border: 1px solid rgba(125, 155, 255, 0.22);
+  background:
+    radial-gradient(circle at 16% 10%, rgba(55, 112, 255, 0.18), transparent 34%),
+    radial-gradient(circle at 92% 8%, rgba(217, 68, 255, 0.16), transparent 30%),
+    rgba(5, 9, 28, 0.88);
+  border-radius: 26px;
+  box-shadow:
+    0 26px 80px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.awV2ChatCard {
+  min-height: 620px;
+  padding: 22px;
+}
+
+.awV2IntelCard {
+  min-height: 620px;
+  padding: 22px;
+}
+
+.awV2Badge {
+  width: fit-content;
+  padding: 8px 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(218, 95, 255, 0.44);
+  background: rgba(135, 67, 255, 0.18);
+  color: #f3ddff;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+}
+
+.awV2Hero {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.awV2Hero h1 {
+  margin: 0;
+  color: white;
+  font-size: 56px;
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+}
+
+.awV2Hero p {
+  max-width: 520px;
+  margin: 14px 0 0;
+  color: rgba(235, 242, 255, 0.76);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.awV2Orb {
+  width: 82px;
+  height: 82px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 38px;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255,255,255,0.22), transparent 32%),
+    linear-gradient(135deg, rgba(224, 64, 255, 0.56), rgba(64, 124, 255, 0.55));
+  border: 1px solid rgba(234, 112, 255, 0.42);
+  box-shadow: 0 0 38px rgba(191, 75, 255, 0.32);
+}
+
+.awV2Chat {
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(125, 155, 255, 0.15);
+  background: rgba(3, 7, 24, 0.76);
+}
+
+.awV2Chat h2 {
+  margin: 0 0 18px;
+  color: white;
+  font-size: 18px;
+}
+
+.awV2Messages {
+  min-height: 255px;
+}
+
+.awV2Msg {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.awV2User {
+  justify-content: flex-end;
+}
+
+.awV2Avatar,
+.awV2UserIcon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  font-weight: 950;
+  font-size: 12px;
+  border: 1px solid rgba(223, 86, 255, 0.48);
+  background: rgba(126, 48, 171, 0.32);
+}
+
+.awV2UserIcon {
+  font-size: 22px;
+  background: rgba(3, 7, 24, 0.72);
+}
+
+.awV2Bubble {
+  max-width: 390px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.075);
+  background: rgba(255,255,255,0.065);
+  color: rgba(255,255,255,0.92);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.awV2User .awV2Bubble {
+  background: linear-gradient(90deg, rgba(225, 72, 210, 0.96), rgba(73, 132, 255, 0.96));
+}
+
+.awV2Bubble small {
+  display: block;
+  margin-top: 8px;
+  color: rgba(235,242,255,0.52);
+  font-size: 11px;
+}
+
+.awV2Actions {
+  margin: 14px auto;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255,255,255,0.025);
+}
+
+.awV2Actions button,
+.awV2Input button,
+.awV2Refresh button {
+  border: 1px solid rgba(125, 155, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.045);
+  color: white;
+  padding: 11px 13px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.awV2Actions button:hover {
+  background: linear-gradient(90deg, rgba(216, 76, 255, 0.35), rgba(79, 140, 255, 0.35));
+}
+
+.awV2Input {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(125, 155, 255, 0.16);
+  background: rgba(255,255,255,0.055);
+}
+
+.awV2Input input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: white;
+  padding-left: 12px;
+  font-size: 14px;
+}
+
+.awV2Input input::placeholder {
+  color: rgba(235,242,255,0.55);
+}
+
+.awV2Input button {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  font-size: 18px;
+  background: linear-gradient(135deg, #e251e8, #4a8cff);
+  box-shadow: 0 0 28px rgba(128, 96, 255, 0.45);
+}
+
+.awV2Top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.awV2Top h2 {
+  margin: 0 0 12px;
+  color: white;
+  font-size: 26px;
+  letter-spacing: -0.04em;
+}
+
+.awV2PoolSelect {
+  border: 1px solid rgba(125,155,255,0.18);
+  background: rgba(255,255,255,0.045);
+  color: white;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 950;
+}
+
+.awV2Refresh {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(235,242,255,0.56);
+  font-size: 12px;
+}
+
+.awV2Stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 170px;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.awV2Stats > div {
+  min-height: 100px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.075);
+  background: rgba(255,255,255,0.04);
+}
+
+.awV2Stats small {
+  display: block;
+  color: rgba(235,242,255,0.58);
+  margin-bottom: 10px;
+}
+
+.awV2Stats strong {
+  display: block;
+  color: white;
+  font-size: 27px;
+}
+
+.awV2Stats span {
+  display: block;
+  margin-top: 6px;
+  color: #61ff9a;
+  font-weight: 850;
+}
+
+.awV2ScoreBox {
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.awV2Ring {
+  width: 104px;
+  height: 104px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, #080c21 50%, transparent 52%),
+    conic-gradient(#4f8cff 0 62%, #d84cff 62% 82%, rgba(255,255,255,0.12) 82% 100%);
+  box-shadow: 0 0 35px rgba(132, 82, 255, 0.38);
+}
+
+.awV2Ring strong {
+  font-size: 34px;
+}
+
+.awV2Ring small {
+  margin-top: -42px;
+  margin-left: 52px;
+  color: rgba(255,255,255,0.72);
+}
+
+.awV2ScoreBox b {
+  color: #61ff9a;
+}
+
+.awV2ScoreBox em {
+  margin-top: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(140, 80, 255, 0.22);
+  color: white;
+  font-size: 11px;
+  font-style: normal;
+}
+
+.awV2Middle {
+  display: grid;
+  grid-template-columns: 1.35fr repeat(4, 1fr);
+  gap: 12px;
+}
+
+.awV2Insights,
+.awV2Metric,
+.awV2Tip,
+.awV2Risk {
+  border: 1px solid rgba(255,255,255,0.075);
+  background: rgba(255,255,255,0.04);
+  border-radius: 18px;
+}
+
+.awV2Insights {
+  padding: 18px;
+}
+
+.awV2Insights h3,
+.awV2Risk h3 {
+  color: white;
+  margin: 0 0 14px;
+}
+
+.awV2Insights div {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  color: rgba(235,242,255,0.78);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.awV2Insights div:last-child {
+  border-bottom: 0;
+}
+
+.awV2Insights b,
+.awV2Metric b {
+  color: #61ff8f;
+}
+
+.awV2Metric {
+  padding: 20px 14px;
+  text-align: center;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+.awV2Metric i {
+  color: #4fb1ff;
+  font-size: 34px;
+  font-style: normal;
+}
+
+.awV2Metric span {
+  color: rgba(235,242,255,0.70);
+}
+
+.awV2Metric strong {
+  color: white;
+  font-size: 27px;
+}
+
+.awV2Tip {
+  margin-top: 16px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 64px 1fr 170px;
+  gap: 18px;
+  align-items: center;
+}
+
+.awV2TipIcon {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 28px;
+  background: linear-gradient(135deg, rgba(217,76,255,0.45), rgba(79,140,255,0.45));
+  border: 1px solid rgba(221, 105, 255, 0.35);
+}
+
+.awV2Tip strong {
+  color: white;
+  font-size: 18px;
+}
+
+.awV2Tip p {
+  margin: 8px 0 0;
+  color: rgba(235,242,255,0.74);
+  line-height: 1.5;
+}
+
+.awV2Slip {
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 77, 210, 0.38);
+  background: rgba(183, 48, 150, 0.14);
+  color: white;
+}
+
+.awV2Slip span {
+  display: block;
+  color: #ff8ee6;
+  margin-bottom: 6px;
+}
+
+.awV2Risk {
+  margin-top: 16px;
+  padding: 18px;
+}
+
+.awV2Risk > div {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.awV2Risk span {
+  padding: 14px;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 900;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+}
+
+.awV2Risk .good {
+  background: rgba(61, 255, 130, 0.09);
+  border-color: rgba(61, 255, 130, 0.18);
+}
+
+.awV2Risk .blue {
+  color: #55b4ff;
+}
+
+.awV2Risk .purple {
+  color: #df7cff;
+}
+
+@media (max-width: 1300px) {
+  .awV2 {
+    grid-template-columns: 1fr;
+  }
+
+  .awV2Stats,
+  .awV2Middle,
+  .awV2Risk > div {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .awV2Tip {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   WAVEAGENT — FIT LIKE 80% BROWSER ZOOM
+   Mantém navegador em 100%, mas reduz só a aba WaveAgent.
+============================================================ */
+
+.awV2 {
+  width: 1540px !important;
+  max-width: 1540px !important;
+
+  transform: scale(0.82) !important;
+  transform-origin: top center !important;
+
+  margin-top: -18px !important;
+  margin-bottom: -105px !important;
+}
+
+
+
+/* =========================================================
+   WaveAgent scroll fix
+   Mantém o painel de chat com scroll interno e evita quebrar layout
+   ========================================================= */
+
+.awV2Shell,
+.waveagent-page,
+.waveagent-panel {
+  overflow-x: hidden !important;
+}
+
+.awV2Chat,
+.waveagent-chat,
+.chat-with-waveagent {
+  max-height: 560px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 8px !important;
+  scroll-behavior: smooth;
+}
+
+.awV2Chat::-webkit-scrollbar,
+.waveagent-chat::-webkit-scrollbar,
+.chat-with-waveagent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.awV2Chat::-webkit-scrollbar-track,
+.waveagent-chat::-webkit-scrollbar-track,
+.chat-with-waveagent::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+}
+
+.awV2Chat::-webkit-scrollbar-thumb,
+.waveagent-chat::-webkit-scrollbar-thumb,
+.chat-with-waveagent::-webkit-scrollbar-thumb {
+  background: rgba(205, 70, 255, 0.55);
+  border-radius: 999px;
+}
+
+.awV2Chat::-webkit-scrollbar-thumb:hover,
+.waveagent-chat::-webkit-scrollbar-thumb:hover,
+.chat-with-waveagent::-webkit-scrollbar-thumb:hover {
+  background: rgba(88, 143, 255, 0.75);
+}
+
+/* Evita que o footer cubra o final do chat */
+.waveagent-page,
+.awV2Page,
+.awV2Shell {
+  padding-bottom: 140px !important;
+}
+
+/* Mantém o painel esquerdo estável */
+.awV2Left,
+.waveagent-left-panel {
+  max-height: calc(100vh - 210px) !important;
+  overflow: hidden !important;
+}
+
+/* Apenas a área das mensagens rola */
+.awV2Messages,
+.waveagent-messages,
+.chat-messages {
+  max-height: 430px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 8px !important;
+  scroll-behavior: smooth;
+}
+
+.awV2Messages::-webkit-scrollbar,
+.waveagent-messages::-webkit-scrollbar,
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.awV2Messages::-webkit-scrollbar-track,
+.waveagent-messages::-webkit-scrollbar-track,
+.chat-messages::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+}
+
+.awV2Messages::-webkit-scrollbar-thumb,
+.waveagent-messages::-webkit-scrollbar-thumb,
+.chat-messages::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(211, 72, 255, 0.8), rgba(85, 143, 255, 0.8));
+  border-radius: 999px;
+}
+
+
+
+/* =========================================================
+   WAVEAGENT REAL POOL SELECTOR
+   Botão estático virou dropdown real.
+========================================================= */
+
+.awV2PoolSelectReal {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  cursor: pointer !important;
+  outline: none !important;
+  padding-right: 32px !important;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,.82) 50%),
+    linear-gradient(135deg, rgba(255,255,255,.82) 50%, transparent 50%) !important;
+
+  background-position:
+    calc(100% - 16px) 50%,
+    calc(100% - 11px) 50% !important;
+
+  background-size: 5px 5px, 5px 5px !important;
+  background-repeat: no-repeat !important;
+}
+
+.awV2PoolSelectReal option {
+  background: #080b18 !important;
+  color: #ffffff !important;
+}
+
+.awV2PoolSelectReal:hover {
+  filter: brightness(1.12) !important;
+  border-color: rgba(255, 79, 216, 0.35) !important;
+}
+
+
+
+/* =========================================================
+   WAVEAGENT BUTTONS REPLY FIX
+========================================================= */
+
+.awV2InputRow {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  gap: 8px !important;
+  margin: 10px 12px 10px !important;
+}
+
+.awV2InputRow input {
+  height: 42px !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  background: rgba(5, 8, 24, .78) !important;
+  color: #fff !important;
+  outline: none !important;
+  padding: 0 14px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+
+.awV2InputRow input::placeholder {
+  color: rgba(255,255,255,.42) !important;
+}
+
+.awV2InputRow button {
+  height: 42px !important;
+  min-width: 76px !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  color: #fff !important;
+  background: linear-gradient(100deg, #ff32b8 0%, #a943ff 48%, #0078ff 100%) !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+  cursor: pointer !important;
+}
+
+.awV2Actions button {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+.awV2PoolSelectReal {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  cursor: pointer !important;
+  outline: none !important;
+  padding-right: 30px !important;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,.82) 50%),
+    linear-gradient(135deg, rgba(255,255,255,.82) 50%, transparent 50%) !important;
+  background-position:
+    calc(100% - 16px) 50%,
+    calc(100% - 11px) 50% !important;
+  background-size: 5px 5px, 5px 5px !important;
+  background-repeat: no-repeat !important;
+}
+
+.awV2PoolSelectReal option {
+  background: #080b18 !important;
+  color: #ffffff !important;
+}
+
+.awV2Insights p {
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+.awV2Insights p span,
+.awV2Insights p strong {
+  display: inline-block !important;
+}

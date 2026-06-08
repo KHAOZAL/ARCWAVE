@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>arc-dex-frontend</title>
+  
+<script id="arcwave-disable-double-click-zoom">
+(function () {
+  function block(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+
+  document.addEventListener("dblclick", block, true);
+
+  document.addEventListener("mousedown", function (e) {
+    if (e.detail > 1) block(e);
+  }, true);
+
+  document.addEventListener("mouseup", function (e) {
+    if (e.detail > 1) block(e);
+  }, true);
+
+  document.addEventListener("click", function (e) {
+    if (e.detail > 1) block(e);
+  }, true);
+
+  document.addEventListener("pointerdown", function (e) {
+    if (e.detail > 1) block(e);
+  }, true);
+
+  document.addEventListener("pointerup", function (e) {
+    if (e.detail > 1) block(e);
+  }, true);
+
+  let lastTouchEnd = 0;
+
+  document.addEventListener("touchend", function (e) {
+    var now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      block(e);
+    }
+    lastTouchEnd = now;
+  }, { passive: false, capture: true });
+
+  document.addEventListener("gesturestart", block, true);
+  document.addEventListener("gesturechange", block, true);
+  document.addEventListener("gestureend", block, true);
+
+  window.addEventListener("wheel", function (e) {
+    if (e.ctrlKey) block(e);
+  }, { passive: false, capture: true });
+})();
+</script>
+
+
+<script id="arcwave-no-dblclick-zoom">
+(function () {
+  function block(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  }
+
+  document.addEventListener("dblclick", block, true);
+
+  document.addEventListener("mousedown", function(e) {
+    if (e.detail > 1) block(e);
+  }, true);
+
+  document.addEventListener("click", function(e) {
+    if (e.detail > 1) block(e);
+  }, true);
+
+  var lastTouchEnd = 0;
+  document.addEventListener("touchend", function(e) {
+    var now = Date.now();
+    if (now - lastTouchEnd <= 300) block(e);
+    lastTouchEnd = now;
+  }, { passive: false, capture: true });
+})();
+</script>
+
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  
+  <script>
+    document.addEventListener("click", function (e) {
+      const el = e.target.closest("button, a, div, span");
+      if (!el) return;
+
+      const text = el.innerText || el.textContent || "";
+
+      if (text.trim().toLowerCase().includes("launch app")) {
+        e.preventDefault();
+        window.location.href = "/swap";
+      }
+    });
+  </script>
+
+</body>
+</html>
