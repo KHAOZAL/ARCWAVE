@@ -821,6 +821,8 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
         return;
       }
 
+      const deadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 20);
+
       const hash = await walletClient.writeContract({
         address: ARCWAVE_FACTORY,
         abi: FACTORY_ABI,
@@ -1105,7 +1107,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
         address: DEX,
         abi: DEX_ABI,
         functionName: "swapWithDeadline",
-        args: [tokenIn, amountIn, minimumOutBigInt],
+        args: [tokenIn, amountIn, minimumOutBigInt, deadline],
         account: wallet,
         chain: arcTestnet,
       });
