@@ -21,8 +21,8 @@ const arcTestnet = {
   id: 5042002,
   name: "Arc Testnet",
   nativeCurrency: {
-    name: "USDC",
-    symbol: "USDC",
+    name: "Test USDC",
+    symbol: "tUSDC",
     decimals: 18,
   },
   rpcUrls: {
@@ -69,43 +69,69 @@ const TOKENS = {
     name: "Test PYUSD",
     address: "0x1Ee284FA2252f1521d31AC6FAC912EcaCC52e72D",
   },
+
+  EURC: {
+    symbol: "EURC",
+    name: "EURC",
+    address: "0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a",
+  },
+  CIRBTC: {
+    symbol: "cirBTC",
+    name: "Circle Wrapped Bitcoin",
+    address: "0xf0C4a4CE82A5746AbAAd9425360Ab04fbBA432BF",
+  },
 };
 
 const POOLS = [
   {
     id: "USDC_TARC",
-    label: "USDC / tARC",
-    tokenA: "USDC",
-    tokenB: "TARC",
-    address: "0x671199e3F5cc97170A70d0C47e32e5f8FfeE4cE7",
+    label: "tARC / tUSDC",
+    tokenA: "TARC",
+    tokenB: "USDC",
+    address: "0xf6460A7B4f367Dae52ba14495Ed4A165a382C5E5",
   },
   {
     id: "USDC_TUSDT",
-    label: "USDC / tUSDT",
-    tokenA: "USDC",
-    tokenB: "TUSDT",
-    address: "0x2BD2D2935D02eBb49BeEDE9b32e5EF6F976DDF84",
+    label: "tUSDT / tUSDC",
+    tokenA: "TUSDT",
+    tokenB: "USDC",
+    address: "0x439F5EB7D329087557ea9373a1d1b33aE1bdB3Ac",
   },
   {
     id: "USDC_TDAI",
-    label: "USDC / tDAI",
-    tokenA: "USDC",
-    tokenB: "TDAI",
-    address: "0xA63bA3DF60Aed1D87d2f141d9aE1ed69fF1D07c4",
+    label: "tDAI / tUSDC",
+    tokenA: "TDAI",
+    tokenB: "USDC",
+    address: "0xa7e93F279a437133E707A22726bbD3852AEbb93F",
   },
   {
     id: "USDC_TUSDE",
-    label: "USDC / tUSDe",
-    tokenA: "USDC",
-    tokenB: "TUSDE",
-    address: "0x05D8B17ea05b87514157037899C726985a7e70d7",
+    label: "tUSDe / tUSDC",
+    tokenA: "TUSDE",
+    tokenB: "USDC",
+    address: "0x106DC0bA10b8081a594F977FB8c176703D6E9791",
   },
   {
     id: "USDC_TPYUSD",
-    label: "USDC / tPYUSD",
+    label: "tPYUSD / tUSDC",
+    tokenA: "TPYUSD",
+    tokenB: "USDC",
+    address: "0xB2982bE59d35dd01c728024d736a0b5F7166D97c",
+  },
+
+  {
+    id: "USDC_EURC",
+    label: "USDC / EURC",
     tokenA: "USDC",
-    tokenB: "TPYUSD",
-    address: "0x1958706756A77871b925194A92f3629db4956c51",
+    tokenB: "EURC",
+    address: "0x96dc62b75ac50af7675bea0cb8ffe693dac501ec",
+  },
+  {
+    id: "USDC_CIRBTC",
+    label: "USDC / cirBTC",
+    tokenA: "USDC",
+    tokenB: "CIRBTC",
+    address: "0xb0ec9a78ebc5a0b8f1205596cc08b1dc73fac6f0",
   },
 ];
 
@@ -259,9 +285,9 @@ function getNetworkName(chainIdHex) {
   return "Wrong network";
 }
 
-function safeParse(value) {
+function safeParse(value, tokenOrSymbol) {
   try {
-    return parseUnits(value || "0", 18);
+    return parseUnits(value || "0", tokenDecimals(tokenOrSymbol));
   } catch {
     return 0n;
   }
@@ -286,21 +312,51 @@ function fmt(value, maxDecimals = 6) {
 }
 
 
+
+
+
+function getWalletSwapMax(balanceIn, tokenInObj) {
+  try {
+    const decimals = tokenDecimals(tokenInObj);
+    const walletMax = Number(formatUnits(balanceIn || 0n, decimals));
+
+    if (!Number.isFinite(walletMax) || walletMax <= 0) {
+      return "0";
+    }
+
+    return clean(walletMax);
+  } catch {
+    return "0";
+  }
+}
+
 function tokenDecimals(tokenOrSymbol) {
-  const symbol = typeof tokenOrSymbol === "string"
-    ? tokenOrSymbol
-    : tokenOrSymbol?.symbol;
+  const address =
+    typeof tokenOrSymbol === "object"
+      ? tokenOrSymbol?.address?.toLowerCase()
+      : "";
+
+  const symbol =
+    typeof tokenOrSymbol === "string"
+      ? tokenOrSymbol
+      : tokenOrSymbol?.symbol || "";
 
   const normalized = String(symbol || "").toUpperCase();
 
   if (
-    normalized.includes("USDC") ||
-    normalized.includes("USDT") ||
-    normalized.includes("DAI") ||
-    normalized.includes("PYUSD") ||
-    normalized.includes("USDE")
+    address === "0x3600000000000000000000000000000000000000" ||
+    address === "0x89b50855aa3be2f677cd6303cec089b5f319d72a" ||
+    normalized === "USDC" ||
+    normalized === "EURC"
   ) {
     return 6;
+  }
+
+  if (
+    address === "0xf0c4a4ce82a5746abaad9425360ab04fbba432bf" ||
+    normalized === "CIRBTC"
+  ) {
+    return 8;
   }
 
   return 18;
@@ -386,7 +442,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
   const balanceIn = tokenInIsA ? balanceA : balanceB;
 
   const estimatedOutBigInt = useMemo(() => {
-    const amountIn = safeParse(payAmount);
+    const amountIn = safeParse(payAmount, tokenInObj);
     if (amountIn <= 0n || reserveA <= 0n || reserveB <= 0n) return 0n;
 
     const reserveIn = tokenInIsA ? reserveA : reserveB;
@@ -729,7 +785,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
       setLoading(true);
       setStatus("Scanning stablecoin routes...");
 
-      const amountIn = safeParse(routeAmount);
+      const amountIn = safeParse(routeAmount, tokenInObj);
 
       if (amountIn <= 0n) {
         alert("Digite um valor maior que zero.");
@@ -838,7 +894,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
     } catch (err) {
       console.error(err);
       setStatus(err.shortMessage || err.message || "Create pool failed.");
-      alert(err.shortMessage || err.message || "Create pool failed.");
+      console.warn("ArcWave tx warning:", err.shortMessage || err.message || "Create pool failed.");
     } finally {
       setLoading(false);
     }
@@ -1090,10 +1146,15 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
 
       await switchToArc();
 
-      const amountIn = safeParse(payAmount);
+      const amountIn = safeParse(payAmount, tokenInObj);
 
       if (amountIn <= 0n) {
         alert("Coloque valor maior que zero.");
+        return;
+      }
+
+      if (!minimumOutBigInt || minimumOutBigInt <= 0n) {
+        console.warn("ArcWave tx warning:", "Route output is zero. Try a smaller amount, refresh pool data, or choose another pool.");
         return;
       }
 
@@ -1103,7 +1164,9 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
 
       setStatus(`Calling swap ${tokenInObj.symbol} → ${tokenOutObj.symbol}...`);
 
-      const hash = await walletClient.writeContract({
+            const deadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 20);
+
+const hash = await walletClient.writeContract({
         address: DEX,
         abi: DEX_ABI,
         functionName: "swapWithDeadline",
@@ -1120,7 +1183,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
     } catch (err) {
       console.error(err);
       setStatus(err.shortMessage || err.message || "Swap failed.");
-      alert(err.shortMessage || err.message || "Swap failed.");
+      console.warn("ArcWave tx warning:", err.shortMessage || err.message || "Swap failed.");
     } finally {
       setLoading(false);
     }
@@ -1135,8 +1198,8 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
 
       await switchToArc();
 
-      const amountA = safeParse(liqA);
-      const amountB = safeParse(liqB);
+      const amountA = safeParse(liqA, tokenA);
+      const amountB = safeParse(liqB, tokenB);
 
       if (amountA <= 0n || amountB <= 0n) {
         alert("Coloque valores maiores que zero.");
@@ -1166,7 +1229,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
     } catch (err) {
       console.error(err);
       setStatus(err.shortMessage || err.message || "Add liquidity failed.");
-      alert(err.shortMessage || err.message || "Add liquidity failed.");
+      console.warn("ArcWave tx warning:", err.shortMessage || err.message || "Add liquidity failed.");
     } finally {
       setLoading(false);
     }
@@ -1206,7 +1269,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
     } catch (err) {
       console.error(err);
       setStatus(err.shortMessage || err.message || "Remove liquidity failed.");
-      alert(err.shortMessage || err.message || "Remove liquidity failed.");
+      console.warn("ArcWave tx warning:", err.shortMessage || err.message || "Remove liquidity failed.");
     } finally {
       setLoading(false);
     }
@@ -1256,7 +1319,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
     } catch (err) {
       console.error(err);
       setStatus(err.shortMessage || err.message || "Pool Intelligence failed.");
-      alert(err.shortMessage || err.message || "Pool Intelligence failed.");
+      console.warn("ArcWave tx warning:", err.shortMessage || err.message || "Pool Intelligence failed.");
     } finally {
       setLoading(false);
     }
@@ -1933,7 +1996,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
                     <span>Balance: {formatTokenAmount(balanceIn, tokenInObj, 6)} {tokenInObj.symbol}</span>
                     <button
                       type="button"
-                      onClick={() => setPayAmount(clean(Number(formatUnits(balanceIn, tokenDecimals(tokenInObj)))))}
+                      onClick={() => setPayAmount(getWalletSwapMax(balanceIn, tokenInObj))}
                     >
                       Max
                     </button>
@@ -2668,7 +2731,7 @@ const [selectedPoolId, setSelectedPoolId] = useState("USDC_TARC");
                     } catch (err) {
                       console.error("[ArcWave Bridge] error:", err);
                       setStatus(err?.shortMessage || err?.message || "Bridge failed.");
-                      alert(err?.shortMessage || err?.message || "Bridge failed.");
+                      console.warn("ArcWave tx warning:", err?.shortMessage || err?.message || "Bridge failed.");
                     } finally {
                       setLoading(false);
                     }
